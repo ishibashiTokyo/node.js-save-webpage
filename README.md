@@ -1,9 +1,19 @@
 # url-to-pdf
-Generate PDF from URL.
 
+Webサイトをスクラップするのに良いのが無かったので自分で作成。
+
+サクッとURLからPDFとPNGを作成するやーつ。
+
+DOMでしゅんしゅんする系サイトはうまく取れないことがあるけど。。
 
 ## use
 
 ``` bash
-$ node main.js <URL>
+$ node main.js https://siteurl
+```
+
+BASIC認証は以下のように引数を追加。
+
+``` bash
+$ node main.js https://siteurl 'USER:PASSWD'
 ```
