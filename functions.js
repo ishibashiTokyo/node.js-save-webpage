@@ -11,7 +11,7 @@ function urlToFileName(url) {
     return url.replace(/\//g, '-');
 }
 
-async function makePdf(url) {
+async function makePdf(url, basicAuth) {
     const launch_options = {
         args: [
             '--no-sandbox',
@@ -41,6 +41,13 @@ async function makePdf(url) {
     console.log("chrome version:", await browser.version());
 
     const page = await browser.newPage();
+
+    if (basicAuth !== '' || basicAuth !== null || basicAuth !== undefined) {
+        await page.setExtraHTTPHeaders({
+            Authorization: `Basic ${new Buffer(`${basicAuth}`).toString('base64')}`
+        });
+    }
+
 
     await page.goto(url, goto_options);
 
