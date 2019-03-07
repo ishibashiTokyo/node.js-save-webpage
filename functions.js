@@ -42,7 +42,7 @@ async function makePdf(url, basicAuth) {
 
     const page = await browser.newPage();
 
-    if (basicAuth !== '' || basicAuth !== null || basicAuth !== undefined) {
+    if (basicAuth !== '' && basicAuth !== null && basicAuth !== undefined) {
         await page.setExtraHTTPHeaders({
             Authorization: `Basic ${new Buffer(`${basicAuth}`).toString('base64')}`
         });
