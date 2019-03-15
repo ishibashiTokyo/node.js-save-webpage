@@ -8,6 +8,14 @@ DOMでしゅんしゅんする系サイトはうまく取れないことがあ�
 
 ## use
 
+クローンしたディレクトリで以下のコマンドを使い、パッケージの復元
+
+``` bash
+$ npm install
+```
+
+URLからPDFとPNGを作成。
+
 ``` bash
 $ node main.js https://siteurl
 ```
