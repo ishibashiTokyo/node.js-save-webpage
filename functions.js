@@ -14,15 +14,15 @@ function urlToFileName(url) {
 async function scrollToBottom(page, viewportHeight) {
     const getScrollHeight = () => {
         return Promise.resolve(document.documentElement.scrollHeight)
-    }
+    };
 
-    let scrollHeight = await page.evaluate(getScrollHeight)
-    let currentPosition = 0
-    let scrollNumber = 0
+    let scrollHeight = await page.evaluate(getScrollHeight);
+    let currentPosition = 0;
+    let scrollNumber = 0;
 
     while (currentPosition < scrollHeight) {
-        scrollNumber += 1
-        const nextPosition = scrollNumber * viewportHeight
+        scrollNumber += 1;
+        const nextPosition = scrollNumber * viewportHeight;
 
         await page.evaluate(
             function (scrollTo) {
@@ -40,7 +40,7 @@ async function scrollToBottom(page, viewportHeight) {
     }
 }
 
-async function pageScrap(url, basicAuth) {
+async function pageScrap(url, basicAuth, mode) {
 
     const launch_options = {
         args: [
@@ -48,7 +48,7 @@ async function pageScrap(url, basicAuth) {
             '--disable-setuid-sandbox',
             '--disable-gpu'
         ]
-    }
+    };
 
     const goto_options = {
         timeout: 10000,
@@ -56,27 +56,31 @@ async function pageScrap(url, basicAuth) {
             "load",
             "domcontentloaded"
         ]
-    }
+    };
 
     const png_options = {
-        path:'./png/' + urlToFileName(url) + '.png',
+        path: './png/' + urlToFileName(url) + '_' + mode + '.png',
         fullPage: true
-    }
+    };
 
     const pdf_options = {
         landscape: false,
-        path: './pdf/' + urlToFileName(url) + '.pdf',
+        path: './pdf/' + urlToFileName(url) + '_' + mode + '.pdf',
         format: 'A4',
         printBackground: true,
         displayHeaderFooter: false,
-        margin: {top:0, right:0, bottom:0, left:0}
-    }
+        margin: {top: 0, right: 0, bottom: 0, left: 0}
+    };
 
     const browser = await puppeteer.launch(launch_options);
     console.log("chrome version:", await browser.version());
 
     const page = await browser.newPage();
-    page.setViewport({width: global.viewportWidth, height: global.viewportHeight});
+    if ( mode === 'sp' ) {
+        page.setViewport({width: global.spViewportWidth, height: global.spViewportHeight});
+    } else {
+        page.setViewport({width: global.pcViewportWidth, height: global.pcViewportHeight});
+    }
 
     // BASIC Authentication
     if (basicAuth !== '' && basicAuth !== null && basicAuth !== undefined) {
@@ -84,12 +88,19 @@ async function pageScrap(url, basicAuth) {
             Authorization: `Basic ${new Buffer(`${basicAuth}`).toString('base64')}`
         });
     }
+    if ( mode === 'sp' ) {
+        page.setUserAgent(global.spAgent);
+    }
 
     await page.goto(url, goto_options);
 
     await sleep(global.sleepTime);
 
-    await scrollToBottom(page, global.viewportHeight);
+    if ( mode === 'sp' ) {
+        await scrollToBottom(page, global.spViewportHeight);
+    } else {
+        await scrollToBottom(page, global.pcViewportHeight);
+    }
 
     await page.pdf(pdf_options);
     console.log("PDF options\n", pdf_options);
