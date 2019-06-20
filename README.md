@@ -14,7 +14,7 @@ DOMでしゅんしゅんする系サイトはうまく取れないことがあ�
 $ npm install
 ```
 
-## オプション
+## main.js オプション
 
 ``` sh
 $ node main.js --help
@@ -37,3 +37,10 @@ Usage: main.js [options]
 		BASIC認証のUSERとPWを指定
 		"this.js -b 'user:passwd'" or "this.js --basic='user:passwd'"
 ```
+
+
+## image-diff.js
+
+- 画像差分チェック
+- 要ImageMagick
+- 移設前移設後でサイトの出力が変わってないか画像ベースでチェックを行えるかテストしてみる。

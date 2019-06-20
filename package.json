@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "argv": "0.0.2",
+    "image-diff": "^2.0.0",
     "puppeteer": "^1.13.0"
   }
 }

@@ -32,7 +32,7 @@ argv.option([
         name: 'auth',
         short: 'a',
         type: 'string',
-        description: 'BASIC認証のUSERとPWを指定',
+        description: 'BASIC認証のユーザ名とパスワードを指定',
         example: "\"this.js -b 'user:passwd'\" or \"this.js --basic='user:passwd'\""
     },
 ]);
