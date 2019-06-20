@@ -6,7 +6,7 @@ Webサイトをスクラップするのに良いのが無かったので自分�
 
 DOMでしゅんしゅんする系サイトはうまく取れないことがあるけど。。
 
-## use
+## 使い方
 
 クローンしたディレクトリで以下のコマンドを使い、パッケージの復元
 
@@ -14,14 +14,26 @@ DOMでしゅんしゅんする系サイトはうまく取れないことがあ�
 $ npm install
 ```
 
-URLからPDFとPNGを作成。
+## オプション
 
-``` bash
-$ node main.js https://siteurl
-```
+``` sh
+$ node main.js --help
 
-BASIC認証は以下のように引数を追加。
+Usage: main.js [options]
 
-``` bash
-$ node main.js https://siteurl 'USER:PASSWD'
+	--help, -h
+		Displays help information about this script
+		'main.js -h' or 'main.js --help'
+
+	--list, -l
+		URLリストのファイルを指定
+		"this.js -l url-list.txt" or "this.js --list=url-list.txt"
+
+	--url, -u
+		URLを単体で指定
+		"this.js -u https://siteurl" or "this.js --url=https://siteurl"
+
+	--auth, -a
+		BASIC認証のUSERとPWを指定
+		"this.js -b 'user:passwd'" or "this.js --basic='user:passwd'"
 ```
